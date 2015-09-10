@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Videos</title>
+</head>
+<body>
+		<h1>Video List</h1>
+		<ul>
+			{% for v in objects %}
+			<li><a href="/static/{{v}}">{{v}}</a>
+			</li>
+			{% endfor %}
+		</ul>	
+</body>
+</html>
