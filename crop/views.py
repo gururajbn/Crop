@@ -26,8 +26,8 @@ def cropIt(request):
 	os.system(cmd)
 	return HttpResponse(json.dumps({
 		"status":"OK",
-		"file":"localhost:8000/static/"+file_path
-		}))
+		"file":"/static/"+file_path
+		}),content_type="application/json")
 
 def getVideos(request):
 	file_list=os.listdir(BASE_DIR+"/static")
