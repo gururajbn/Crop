@@ -20,11 +20,12 @@ from django.conf import settings
 #from crop.views import cropIt,getVideos,getVidList,videos
 from crop.views import videos
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^crop/', cropIt),
-    #url(r'^list/',getVideos),
+    url(r'^list/', TemplateView.as_view(template_name="home.html")),
     #url(r'^getvideos/',getVidList),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
     url(r'^', csrf_exempt(videos.as_view()))
