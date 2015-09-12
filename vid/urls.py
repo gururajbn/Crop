@@ -17,13 +17,16 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from crop.views import cropIt,getVideos,getVidList
+#from crop.views import cropIt,getVideos,getVidList,videos
+from crop.views import videos
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^crop/', cropIt),
-    url(r'^list/',getVideos),
-    url(r'^getvideos/',getVidList),
+    #url(r'^crop/', cropIt),
+    #url(r'^list/',getVideos),
+    #url(r'^getvideos/',getVidList),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
+    url(r'^', csrf_exempt(videos.as_view()))
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
