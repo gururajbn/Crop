@@ -32,6 +32,17 @@ def cropIt(request):
 def getVideos(request):
 	file_list=os.listdir(BASE_DIR+"/static")
 
+
 	return render(request,"list.html",{
 		'objects':file_list
 		})
+
+def getVidList(request):
+	file_list=os.listdir(BASE_DIR+"/static")
+	context=[]
+	for i in range(0,len(file_list)):
+		context.append({ "id":i+1,
+						 "original":"/media/"+file_list[i],
+						 "croped":"/static/"+file_list[i]})
+
+	return HttpResponse(json.dumps(context),content_type="application/json")
