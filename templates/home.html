@@ -1,14 +1,106 @@
-<html ng-app="vid">
+<!DOCTYPE html>
+<html>
 <head>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="/static/app.js"></script>
-    </head>
-<body ng-controller="getvid">
-    
-    <input ng-model="name">
-    <h1>{{name}}</h1>
-    
-    </body>
-    
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Video Viewer</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/stylea.css">
+    <script src="/static/jquery-latest.min.js" type="text/javascript"></script>
+<!--    <script src="/static/script.js"></script>-->
+    <style type="text/css">
+        body {
+            margin: 0px;
+        }
+    </style>
+    <script type="text/javascript">
+        var glb;
+        $(document).ready(function () {
+            $.ajax({
+                url: "/", success: function (result) {
+                    glb = result;
+                    $("#csssidebar").append("<ul>");
+                    for (var i = 0; i < result.length; i++) {
+                        $("#csssidebar").append('<li class="vid" id="' + result[i]['pk'] + '"><a><span>' + result[i].fields.title + '</span></a></li>');
+//                        alert(result[i]['pk']);
+                    }
+                    $("#csssidebar").append("</ul>");
+                    $(".vid").click(function () {
+                        var pk = this.id - 1;
+                        var or = result[pk].fields.originalfile;
+                        var cro =result[pk].fields.cropedfile;
+
+                        document.getElementById('width').innerHTML="Width:"+result[pk].fields.width;
+                        document.getElementById('height').innerHTML="Height:"+result[pk].fields.height;
+                        document.getElementById('x').innerHTML="X:"+result[pk].fields.x;
+                        document.getElementById('y').innerHTML="Y:"+result[pk].fields.y;
+                        
+                        console.log(pk);
+                        //alert(pk + "\n" + or + "  k- \n  - " + cro);
+
+                        document.getElementById('vid1src')['src']=or;
+                        document.getElementById('vid2src')['src']=cro;
+
+                        document.getElementById('vid1').load();
+                        document.getElementById('vid2').load();
+
+                        document.getElementById('vid1').play();
+                        document.getElementById('vid2').play();
+
+                    });
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+<div>  
+<div id='cssmain'>
+    <ul>
+        <li><a href='#'>miip Video Viewer</a></li>
+    </ul>
+</div>
+<div style="float: left">
+    <div id='csssidebar'></div>
+</div>
+<div style="float: left;margin: 40px;box-shadow:0 2px #131512;">
+    <video id="vid1" width="420" controls autoplay>
+        <source id="vid1src" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+<div style="float: left;margin: 40px;box-shadow:0 2px #131512;">
+    <video id="vid2" width="420" controls autoplay>
+        <source id="vid2src" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+ </div>
+<div style="position: absolute;
+    top: 450px;margin-left: 206px;">
+    <div style="float:left;margin-right: 430px;margin-left: 191px;">
+    <p id="width"></p>
+    <p id="height"></p>
+    </div>
+   <div style="float:left;">
+    <p id="x"></p>
+    <p id="y"></p>
+    </div>
+<!--
+    <table style="width:100%">
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td> 
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+  </tr>
+</table>
+-->
+</div>
+</body>
 </html>
