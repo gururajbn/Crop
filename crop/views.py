@@ -31,7 +31,7 @@ class videos(View):
 		y=request.POST["y"]
 		width= request.POST["width"]
 		height= request.POST["height"]
-		filename= str(request.FILES["file"]._get_name())
+		filename= request.POST["filename"]
 		form= videoform(request.POST)
 		if form.is_valid():
 			vid=form.save(commit=False)
